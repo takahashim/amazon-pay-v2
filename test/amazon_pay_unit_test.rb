@@ -136,7 +136,7 @@ class AmazonPayUnitTest < Minitest::Test
     assert_equal("value", res.to_xml.root.elements[1].text)
     assert_equal("<root><test>value</test></root>", res.body)
     assert_equal("value", res.get_element("root","test"))
-    assert_not_equal(res.get_element("root","test"), res.get_element("extra","extra"))
+    assert(res.get_element("root","test") != res.get_element("extra","extra"))
     assert_equal("200", res.code)
   end
 

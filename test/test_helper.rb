@@ -5,8 +5,8 @@ require 'webmock'
 include WebMock::API
 WebMock.enable!
 
-require "test/unit/assertions"
-include Test::Unit::Assertions
+#require "test/unit/assertions"
+#include Test::Unit::Assertions
 
 require 'amazon_pay'
 

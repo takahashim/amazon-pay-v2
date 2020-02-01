@@ -24,4 +24,9 @@ Gem::Specification.new do |s|
   s.files = Dir.glob('lib/**/*') + %w(LICENSE NOTICE README.md)
   s.require_path = ['lib']
   s.license = 'Apache License, Version 2.0'
+  s.add_development_dependency "bundler"
+  s.add_development_dependency "rake", "~> 12.0"
+  s.add_development_dependency "simplecov", "~> 0.18"
+  s.add_development_dependency "webmock", "~> 3.8"
+  s.add_development_dependency "minitest", "~> 5.14"
 end
