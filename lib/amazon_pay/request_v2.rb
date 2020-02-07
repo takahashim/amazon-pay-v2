@@ -32,7 +32,6 @@ module AmazonPay
           url_fragment,
           payload:,
           public_key_id:,
-          store_id:,
           headers:,
           method: :post,
           private_pem_path: nil,
@@ -49,7 +48,6 @@ module AmazonPay
 
       @url_fragment = url_fragment
       @public_key_id = public_key_id
-      @store_id = store_id
       private_pem_path ||= 'private.pem'
       @private_pem = File.read(private_pem_path)
       @region = region
@@ -158,13 +156,6 @@ module AmazonPay
 
       pre_signed_headers
     end
-
-    # def checkout_session_body
-    #   { "webCheckoutDetail" =>
-    #     { "checkoutReviewReturnUrl" =>
-    #       "https://local.finditparts.com:3001/user_session/amazon_login"},
-    #     "storeId" => @store_id}
-    # end
 
     def sign_request(http_request_method,
                      request_uri,

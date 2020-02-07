@@ -21,7 +21,6 @@ module AmazonPay
 
     def initialize(
           public_key_id:,
-          store_id:,
           sandbox: false,
           currency_code: :usd,
           region: :na,
@@ -36,7 +35,6 @@ module AmazonPay
         )
 
       @public_key_id = public_key_id
-      @store_id = store_id
       @currency_code = currency_code.to_s.upcase
       @sandbox = sandbox
       @region = region
@@ -60,7 +58,6 @@ module AmazonPay
         headers: headers,
         private_pem_path: @private_pem_path,
         public_key_id: @public_key_id,
-        store_id: @store_id,
 
         sandbox: @sandbox,
         region: @region,
