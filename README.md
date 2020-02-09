@@ -8,7 +8,7 @@ README in Original version is [here](./README.md).
 # Install
 
 ```ruby
-gem 'amazon_pay', git: 'git@github.com:takahashim/amazon_pay_v2.git', branch: 'v2'
+gem 'amazon_pay', git: 'git://github.com/takahashim/amazon-pay-v2.git', branch: 'v2'
 ```
 ```
 bundle install

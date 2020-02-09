@@ -92,7 +92,7 @@ module AmazonPay
 
     def get_charge_permission(charge_permission_id, headers: nil)
       api_call("v1/chargePermissions/#{charge_permission_id}",
-               mehotd: :get, headers: headers)
+               method: :get, headers: headers, payload: nil)
     end
 
 
