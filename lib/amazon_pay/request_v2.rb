@@ -70,7 +70,7 @@ module AmazonPay
 
     def init_idempotency_key
       if @method == :post
-        @headers['x-amz-pay-idempotency-key'] ||= SecureRandom.alphanumeric(28)
+        @headers['x-amz-pay-idempotency-key'] ||= SecureRandom.hex(14)
       end
     end
 
