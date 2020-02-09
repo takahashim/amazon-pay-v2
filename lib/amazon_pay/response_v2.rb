@@ -18,7 +18,9 @@ module AmazonPay
     end
 
     def success
-      @response.code.eql? '200'
+      @response.code == '200' || @response.code == '201'
     end
+
+    alias_method :success?, :success
   end
 end
