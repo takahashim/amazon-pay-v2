@@ -10,7 +10,6 @@ class AmazonPayClientV2Test < Minitest::Test
   def setup
     @pem_path = File.dirname(__FILE__) + "/fixtures/private.pem"
     @cli = AmazonPay::ClientV2.new(public_key_id: "DUMMYKEYID",
-                                   store_id: "amzn1.application-oa2-client.12345",
                                    private_pem_path: @pem_path,
                                    sandbox: true,
                                    region: 'JP',

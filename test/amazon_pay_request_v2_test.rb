@@ -11,7 +11,6 @@ class AmazonPayRequestV2Test < Minitest::Test
     @pem_path = File.dirname(__FILE__) + "/fixtures/private.pem"
     @req = AmazonPay::RequestV2.new("v1/foo",
                                     public_key_id: "DUMMYKEYID",
-                                    store_id: "amzn1.application-oa2-client.12345",
                                     method: :post,
                                     payload: nil,
                                     headers: {},
@@ -27,7 +26,6 @@ class AmazonPayRequestV2Test < Minitest::Test
 
     req = AmazonPay::RequestV2.new("v1/checkoutSessions",
                                    public_key_id: "DUMMYKEYID",
-                                   store_id: "amzn1.application-oa2-client.12345",
                                    method: :post,
                                    payload: "",
                                    headers: {},
