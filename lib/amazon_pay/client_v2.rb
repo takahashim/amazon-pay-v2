@@ -140,7 +140,7 @@ module AmazonPay
 
     def get_refund(refund_id, headers: nil)
       api_call("v1/refunds/#{refund_id}",
-               method: :get, headers: headers)
+               method: :get, headers: headers, payload: nil)
     end
   end
 end
