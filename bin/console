@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require "bundler/setup"
+require "irb"
+
+require "amazon_pay"
+
+IRB.start(__FILE__)
