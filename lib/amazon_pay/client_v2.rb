@@ -127,7 +127,7 @@ module AmazonPay
 
 
     def cancel_charge(charge_id, payload, headers: nil)
-      api_call('DELETE', "v1/charges/#{charge_id}/cancel",
+      api_call("v1/charges/#{charge_id}/cancel",
                method: :delete, payload: payload, headers: headers)
     end
 
