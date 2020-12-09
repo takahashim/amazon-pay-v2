@@ -72,6 +72,18 @@ module AmazonPay
       ).call
     end
 
+    def generate_button_signature(payload)
+      req = AmazonPay::RequestV2.new(
+        nil,
+        payload: payload,
+        headers: nil,
+        private_pem_path: @private_pem_path,
+        public_key_id: @public_key_id,
+        sandbox: @sandbox
+      )
+      req.generate_button_signature(payload)
+    end
+
     ## API V2
     def create_checkout_session(payload, headers: nil)
       api_call('v1/checkoutSessions',
@@ -140,6 +152,11 @@ module AmazonPay
 
     def get_refund(refund_id, headers: nil)
       api_call("v1/refunds/#{refund_id}",
+               method: :get, headers: headers, payload: nil)
+    end
+
+    def get_buyer(buyer_token, headers: nil)
+      api_call("v2/buyers/#{buyer_token}",
                method: :get, headers: headers, payload: nil)
     end
   end

@@ -136,6 +136,21 @@ module AmazonPay
       uri
     end
 
+    def generate_button_signature(payload)
+      if payload.kind_of?(String)
+        payload_json = payload
+      else
+        payload_json = JSON.dump(payload)
+      end
+      hashed_button_request = create_hashed_canonical_request(payload_json)
+      rsa = OpenSSL::PKey::RSA.new(@private_pem)
+      signature = Base64.strict_encode64(rsa.sign_pss(HASH_ALGORITHM,
+                                                      hashed_button_request,
+                                                      salt_length: 20,
+                                                      mgf1_hash: HASH_ALGORITHM))
+      signature
+    end
+
     def create_pre_signed_headers(request_uri,
                                   time_stamp,
                                   other_headers)

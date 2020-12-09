@@ -373,5 +373,39 @@ EOB
 
     assert_equal(expected, canon)
   end
+
+  def test_generate_button_signature
+    payload = JSON.dump(
+      {
+        storeId: "amzn1.application-oa2-client.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        webCheckoutDetails: {
+          checkoutReviewReturnUrl: "https://localhost/test/CheckoutReview.php",
+          checkoutResultReturnUrl: "https://localhost/test/CheckoutResult.php"
+        }
+      }
+    )
+    # payload = '{"storeId":"amzn1.application-oa2-client.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","webCheckoutDetails":{"checkoutReviewReturnUrl":"https://localhost/test/CheckoutReview.php","checkoutResultReturnUrl":"https://localhost/test/CheckoutResult.php"}}'
+
+    req = AmazonPay::RequestV2.new("v1/foo",
+                                   public_key_id: "ABC123DEF456XYZ789IJK000",
+                                   method: :post,
+                                   payload: nil,
+                                   headers: {},
+                                   private_pem_path: @pem_path
+                                  )
+    signature = req.generate_button_signature(payload)
+
+    data = "AMZN-PAY-RSASSA-PSS\n" +
+           "8dec52d799607be40f82d5c8e7ecb6c171e6591c41b1111a576b16076c89381c"
+
+    rsa = OpenSSL::PKey::RSA.new(File.read(@pem_path))
+    pub_key = rsa.public_key
+    result = pub_key.verify_pss("SHA256",
+                                Base64.decode64(signature),
+                                data,
+                                salt_length: :auto,
+                                mgf1_hash: "SHA256")
+    assert_equal(true, result)
+  end
 end
 
