@@ -86,77 +86,77 @@ module AmazonPay
 
     ## API V2
     def create_checkout_session(payload, headers: nil)
-      api_call('v1/checkoutSessions',
+      api_call("#{V2_API_VERSION}/checkoutSessions",
                method: :post, payload: payload, headers: headers)
     end
 
     def get_checkout_session(checkout_session_id, headers: nil)
-      api_call("v1/checkoutSessions/#{checkout_session_id}",
+      api_call("#{V2_API_VERSION}/checkoutSessions/#{checkout_session_id}",
                method: :get, headers: headers, payload: nil)
     end
 
 
     def update_checkout_session(checkout_session_id, payload, headers: nil)
-      api_call("v1/checkoutSessions/#{checkout_session_id}",
+      api_call("#{V2_API_VERSION}/checkoutSessions/#{checkout_session_id}",
                method: :patch, payload: payload, headers: headers)
     end
 
 
     def get_charge_permission(charge_permission_id, headers: nil)
-      api_call("v1/chargePermissions/#{charge_permission_id}",
+      api_call("#{V2_API_VERSION}/chargePermissions/#{charge_permission_id}",
                method: :get, headers: headers, payload: nil)
     end
 
 
     def update_charge_permission(charge_permission_id, payload, headers: nil)
-      api_call("v1/chargePermissions/#{charge_permission_id}",
+      api_call("#{V2_API_VERSION}/chargePermissions/#{charge_permission_id}",
                method: :patch, payload: payload, headers: headers)
     end
 
 
     def close_charge_permission(charge_permission_id, payload, headers: nil)
-      api_call("v1/chargePermissions/#{charge_permission_id}/close",
+      api_call("#{V2_API_VERSION}/chargePermissions/#{charge_permission_id}/close",
                method: :delete, payload: payload, headers: headers)
     end
 
 
     def create_charge(payload, headers: nil)
-      api_call('v1/charges',
+      api_call("#{V2_API_VERSION}/charges",
                method: :post, payload: payload, headers: headers)
     end
 
 
     def get_charge(charge_id, headers: nil)
-      api_call("v1/charges/#{charge_id}",
+      api_call("#{V2_API_VERSION}/charges/#{charge_id}",
                method: :get, headers: headers, payload: nil)
     end
 
 
     def capture_charge(charge_id, payload, headers: nil)
-      api_call("v1/charges/#{charge_id}/capture",
+      api_call("#{V2_API_VERSION}/charges/#{charge_id}/capture",
                method: :post, payload: payload, headers: headers)
     end
 
 
     def cancel_charge(charge_id, payload, headers: nil)
-      api_call("v1/charges/#{charge_id}/cancel",
+      api_call("#{V2_API_VERSION}/charges/#{charge_id}/cancel",
                method: :delete, payload: payload, headers: headers)
     end
 
 
     def create_refund(payload, headers: nil)
-      api_call('v1/refunds',
+      api_call("#{V2_API_VERSION}/refunds",
                method: :post, payload: payload, headers: headers)
     end
 
 
     def get_refund(refund_id, headers: nil)
-      api_call("v1/refunds/#{refund_id}",
+      api_call("#{V2_API_VERSION}/refunds/#{refund_id}",
                method: :get, headers: headers, payload: nil)
     end
 
     def get_buyer(buyer_token, headers: nil)
-      api_call("v2/buyers/#{buyer_token}",
+      api_call("#{V2_API_VERSION}/buyers/#{buyer_token}",
                method: :get, headers: headers, payload: nil)
     end
   end

@@ -22,7 +22,7 @@ class AmazonPayClientV2Test < Minitest::Test
     body = %Q({"checkoutSessionId":"be4cbb1e-c411-4719-b44c-1af8b1dc0ee1","webCheckoutDetail":{"checkoutReviewReturnUrl":"https://localhost:3000/user_session/amazon_login","checkoutResultReturnUrl":null,"amazonPayRedirectUrl":null},"productType":null,"paymentDetail":{"paymentIntent":null,"canHandlePendingAuthorization":false,"chargeAmount":null,"softDescriptor":null,"presentmentCurrency":null},"merchantMetadata":{"merchantReferenceId":null,"merchantStoreName":null,"noteToBuyer":null,"customInformation":null},"supplementaryData":null,"buyer":null,"paymentPreferences":[null],"statusDetail":{"state":"Open","reasonCode":null,"reasonDescription":null,"lastUpdatedTimestamp":"20200220T154900Z"},"shippingAddress":null,"platformId":null,"chargePermissionId":null,"chargeId":null,"constraints":[{"constraintId":"BuyerNotAssociated","description":"There is no buyer associated with the Checkout Session. Return the checkout session id to the Amazon Pay Button to allow buyer to login."},{"constraintId":"ChargeAmountNotSet","description":"chargeAmount is not set."},{"constraintId":"CheckoutResultReturnUrlNotSet","description":"checkoutResultReturnUrl is not set."},{"constraintId":"PaymentIntentNotSet","description":"paymentIntent is not set."}],"creationTimestamp":"20200220T154900Z","expirationTimestamp":"20200221T154900Z","storeId":"amzn1.application-oa2-client.dummy123","providerMetadata":{"providerReferenceId":null},"releaseEnvironment":"Sandbox","deliverySpecifications":null})
 
     stub_request(:post,
-                 "https://pay-api.amazon.jp/sandbox/v1/checkoutSessions"
+                 "https://pay-api.amazon.jp/sandbox/v2/checkoutSessions"
                 ).with(body: payload).to_return(status: 200, body: body)
     result = @cli.create_checkout_session(payload,
                                           headers: headers)
@@ -61,7 +61,7 @@ class AmazonPayClientV2Test < Minitest::Test
     body2 = %Q({"checkoutSessionId":"6f916c70-c611-4adb-af5c-8204e68cd8e0","webCheckoutDetail":{"checkoutReviewReturnUrl":"https://example.jp/review_url","checkoutResultReturnUrl":"https://example.jp/result_url","amazonPayRedirectUrl":null},"productType":null,"paymentDetail":{"paymentIntent":"Authorize","canHandlePendingAuthorization":false,"chargeAmount":{"amount":"500","currencyCode":"JPY"},"softDescriptor":null,"presentmentCurrency":null},"merchantMetadata":{"merchantReferenceId":"xxx_authorization_reference_id","merchantStoreName":"MyStore","noteToBuyer":"item_name","customInformation":null},"supplementaryData":null,"buyer":null,"paymentPreferences":[null],"statusDetail":{"state":"Open","reasonCode":null,"reasonDescription":null,"lastUpdatedTimestamp":"20200222T041614Z"},"shippingAddress":null,"platformId":null,"chargePermissionId":null,"chargeId":null,"constraints":[{"constraintId":"BuyerNotAssociated","description":"There is no buyer associated with the Checkout Session. Return the checkout session id to the Amazon Pay Button to allow buyer to login."}],"creationTimestamp":"20200222T041614Z","expirationTimestamp":"20200223T041614Z","storeId":"amzn1.application-oa2-client.dummy123","providerMetadata":{"providerReferenceId":null},"releaseEnvironment":"Sandbox","deliverySpecifications":null})
 
     stub_request(:post,
-                 "https://pay-api.amazon.jp/sandbox/v1/checkoutSessions"
+                 "https://pay-api.amazon.jp/sandbox/v2/checkoutSessions"
                 ).with(body: payload2).to_return(status: 200, body: body2)
 
     result = @cli.create_checkout_session(payload2)
@@ -89,7 +89,7 @@ class AmazonPayClientV2Test < Minitest::Test
     checkout_session_id = "6f916c70-c611-4adb-af5c-8204e68cd8e0"
 
     stub_request(:get,
-                 "https://pay-api.amazon.jp/sandbox/v1/checkoutSessions/#{checkout_session_id}"
+                 "https://pay-api.amazon.jp/sandbox/v2/checkoutSessions/#{checkout_session_id}"
                 ).to_return(status: 200, body: body)
     result = @cli.get_checkout_session(checkout_session_id)
 
@@ -139,7 +139,7 @@ class AmazonPayClientV2Test < Minitest::Test
     checkout_session_id = "6f916c70-c611-4adb-af5c-8204e68cd8e0"
 
     stub_request(:patch,
-                 "https://pay-api.amazon.jp/sandbox/v1/checkoutSessions/#{checkout_session_id}"
+                 "https://pay-api.amazon.jp/sandbox/v2/checkoutSessions/#{checkout_session_id}"
                 ).to_return(status: 200, body: body)
     result = @cli.update_checkout_session(checkout_session_id, payload)
 
@@ -174,7 +174,7 @@ class AmazonPayClientV2Test < Minitest::Test
     charge_permission_id = "S03-4260904-6894064"
 
     stub_request(:get,
-                 "https://pay-api.amazon.jp/sandbox/v1/chargePermissions/#{charge_permission_id}"
+                 "https://pay-api.amazon.jp/sandbox/v2/chargePermissions/#{charge_permission_id}"
                 ).to_return(status: 200, body: body)
     result = @cli.get_charge_permission(charge_permission_id)
 
@@ -213,7 +213,7 @@ class AmazonPayClientV2Test < Minitest::Test
     charge_permission_id = "S03-4260904-6894064"
 
     stub_request(:patch,
-                 "https://pay-api.amazon.jp/sandbox/v1/chargePermissions/#{charge_permission_id}"
+                 "https://pay-api.amazon.jp/sandbox/v2/chargePermissions/#{charge_permission_id}"
                 ).with(body: payload).to_return(status: 200, body: body)
     result = @cli.update_charge_permission(charge_permission_id, payload)
 
@@ -250,7 +250,7 @@ class AmazonPayClientV2Test < Minitest::Test
     charge_permission_id = "S03-4260904-6894064"
 
     stub_request(:delete,
-                 "https://pay-api.amazon.jp/sandbox/v1/chargePermissions/#{charge_permission_id}/close"
+                 "https://pay-api.amazon.jp/sandbox/v2/chargePermissions/#{charge_permission_id}/close"
                 ).with(body: payload).to_return(status: 200, body: body)
     result = @cli.close_charge_permission(charge_permission_id, payload)
 
@@ -278,7 +278,7 @@ class AmazonPayClientV2Test < Minitest::Test
     charge_id = "S03-4260904-6894064-C010879"
 
     stub_request(:get,
-                 "https://pay-api.amazon.jp/sandbox/v1/charges/#{charge_id}"
+                 "https://pay-api.amazon.jp/sandbox/v2/charges/#{charge_id}"
                 ).to_return(status: 200, body: body)
     result = @cli.get_charge(charge_id)
 
@@ -310,7 +310,7 @@ class AmazonPayClientV2Test < Minitest::Test
     charge_id = "S03-4260904-6894064-C010879"
 
     stub_request(:post,
-                 "https://pay-api.amazon.jp/sandbox/v1/charges/#{charge_id}/capture"
+                 "https://pay-api.amazon.jp/sandbox/v2/charges/#{charge_id}/capture"
                 ).to_return(status: 200, body: body)
     result = @cli.capture_charge(charge_id, payload)
 
@@ -345,7 +345,7 @@ class AmazonPayClientV2Test < Minitest::Test
     charge_id = "S03-4260904-6894064-C010879"
 
     stub_request(:post,
-                 "https://pay-api.amazon.jp/sandbox/v1/refunds"
+                 "https://pay-api.amazon.jp/sandbox/v2/refunds"
                 ).with(body: payload).to_return(status: 200, body: body)
     result = @cli.create_refund(payload)
 
@@ -369,7 +369,7 @@ class AmazonPayClientV2Test < Minitest::Test
     body = %Q({"refundId":"S03-4260904-6894064-R064628","chargeId":"S03-4260904-6894064-C010879","creationTimestamp":1582374729128,"refundAmount":{"amount":"100.00","currencyCode":"JPY"},"statusDetail":{"state":"Refunded","reasonCode":null,"reasonDescription":null,"lastUpdatedTimestamp":"20200222T123239Z"},"softDescriptor":"AMZ*MyStore","releaseEnvironment":"Sandbox"})
 
     stub_request(:get,
-                 "https://pay-api.amazon.jp/sandbox/v1/refunds/#{refund_id}"
+                 "https://pay-api.amazon.jp/sandbox/v2/refunds/#{refund_id}"
                 ).to_return(status: 200, body: body)
     result = @cli.get_refund(refund_id)
 

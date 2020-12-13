@@ -4,8 +4,6 @@ require 'cgi/util'
 require 'openssl'
 
 module AmazonPay
-  V2_API_VERSION = 'v1'
-
   class RequestV2
     MAX_RETRIES = 3
 
