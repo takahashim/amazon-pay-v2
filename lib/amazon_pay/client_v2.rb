@@ -101,6 +101,10 @@ module AmazonPay
                method: :patch, payload: payload, headers: headers)
     end
 
+    def complete_checkout_session(checkout_session_id, payload, headers: nil)
+      api_call("#{V2_API_VERSION}/checkoutSessions/#{checkout_session_id}/complete",
+               method: :post, payload: payload, headers: headers)
+    end
 
     def get_charge_permission(charge_permission_id, headers: nil)
       api_call("#{V2_API_VERSION}/chargePermissions/#{charge_permission_id}",
