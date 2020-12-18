@@ -168,6 +168,36 @@ class AmazonPayClientV2Test < Minitest::Test
                  res_body["webCheckoutDetail"]["amazonPayRedirectUrl"])
   end
 
+  def test_complete_checkout_session
+    payload = {
+      'chargeAmount' => {
+        'amount' => '300',
+        'currencyCode' => 'JPY'
+      }
+    }
+
+    body = %Q({"checkoutSessionId":"6f916c70-c611-4adb-af5c-8204e68cd8e0","webCheckoutDetail":null,"productType":"PayAndShip","paymentDetail":null,"merchantMetadata":null,"supplementaryData":null,"buyer":null,"paymentPreferences":[null],"statusDetail":{"state":"Complete","reasonCode":null,"reasonDescription":null,"lastUpdatedTimestamp":"20200222T092520Z"},"shippingAddress":null,"platformId":null,"chargePermissionId":null,"chargeId":null,"constraints":[],"creationTimestamp":"20200222T041614Z","expirationTimestamp":"20200223T041614Z","storeId":"amzn1.application-oa2-client.dummy123","providerMetadata":{"providerReferenceId":null},"releaseEnvironment":"Sandbox","deliverySpecifications":null})
+
+    checkout_session_id = "6f916c70-c611-4adb-af5c-8204e68cd8e0"
+
+    stub_request(:post,
+                 "https://pay-api.amazon.jp/sandbox/v2/checkoutSessions/#{checkout_session_id}/complete"
+                ).to_return(status: 200, body: body)
+    result = @cli.complete_checkout_session(checkout_session_id, payload)
+
+    assert_equal("200", result.code)
+    assert_equal(true, result.success?)
+    assert_equal(true, result.success)
+
+    res_body = result.parsed_body
+    assert_equal("6f916c70-c611-4adb-af5c-8204e68cd8e0",
+                 res_body["checkoutSessionId"])
+    assert_nil(res_body["paymentDetail"])
+    assert_equal("Complete",
+                 res_body["statusDetail"]["state"])
+  end
+
+
   def test_get_charge_permission
     body = %Q({"chargePermissionId":"S03-4260904-6894064","chargePermissionReferenceId":null,"platformId":null,"buyer":{"name":"buyer_test","email":"buyer-test@example.com","buyerId":"amzn1.account.BUYERDUMMY"},"shippingAddress":{"name":"JP test1","addressLine1":"4-1-1 Kamikodanaka; Nakahara-ku","addressLine2":null,"addressLine3":null,"city":"Kawasaki-shi","county":null,"district":null,"stateOrRegion":"Kanagawa","postalCode":"211-8588","countryCode":"JP","phoneNumber":"09057311712"},"paymentPreferences":[{"billingAddress":null,"paymentDescriptor":null}],"statusDetail":{"state":"NonChargeable","reasons":[{"reasonCode":"ChargeInProgress","reasonDescription":"A charge is already in progress. You cannot initiate a new charge unless previous charge is canceled."}],"lastUpdatedTimestamp":"20200222T100318Z"},"creationTimestamp":"20200222T100318Z","expirationTimestamp":"20200820T100318Z","merchantMetadata":{"merchantReferenceId":"2020-00000002","merchantStoreName":"MyStore2","noteToBuyer":"Thank you for your order!","customInformation":"Custom information"},"releaseEnvironment":"Sandbox","chargeAmountLimit":{"amount":"300","currencyCode":"JPY"},"presentmentCurrency":"JPY"})
 
